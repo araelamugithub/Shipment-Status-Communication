@@ -1,0 +1,537 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="Main_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:snm="clr-namespace:System.Net.Mail;assembly=System"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Flowchart sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="ui:GenericValue" Name="password" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="mailID" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="output" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="ou" />
+      <Variable x:TypeArguments="sd:DataTable" Name="builddatatable" />
+    </Flowchart.Variables>
+    <Flowchart.StartNode>
+      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+        <ui:InputDialog Options="{x:Null}" DisplayName="Email" sap2010:WorkflowViewState.IdRef="InputDialog_3" IsPassword="False" Label="Mail ID: " Title="Enter your credentials">
+          <ui:InputDialog.Result>
+            <OutArgument x:TypeArguments="ui:GenericValue">[mailID]</OutArgument>
+          </ui:InputDialog.Result>
+        </ui:InputDialog>
+        <FlowStep.Next>
+          <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+            <ui:InputDialog Options="{x:Null}" DisplayName="Password" sap2010:WorkflowViewState.IdRef="InputDialog_4" IsPassword="True" Label="Password: " Title="Enter your credentials">
+              <ui:InputDialog.Result>
+                <OutArgument x:TypeArguments="ui:GenericValue">[password]</OutArgument>
+              </ui:InputDialog.Result>
+            </ui:InputDialog>
+            <FlowStep.Next>
+              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                <Sequence DisplayName="Web Work Flow" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <ui:OpenBrowser UiBrowser="{x:Null}" BrowserType="IE" DisplayName="Open https://accounts.google.com/signin/v2/identifier?service=mail&amp;passive=true&amp;rm=false&amp;continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;ss=1&amp;scc=1&amp;ltmpl=default&amp;ltmplcache=2&amp;emr=1&amp;osid=1&amp;flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" Hidden="False" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" Url="https://accounts.google.com/signin/v2/identifier?service=mail&amp;passive=true&amp;rm=false&amp;continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;ss=1&amp;scc=1&amp;ltmpl=default&amp;ltmplcache=2&amp;emr=1&amp;osid=1&amp;flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin">
+                    <ui:OpenBrowser.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                          <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Into 'INPUT  identifierId'" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_1" SendWindowMessages="False" SimulateType="True" Text="[mailID]">
+                            <ui:TypeInto.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="f65ba11cc0fcee8cf0c8b447877e4418" Selector="&lt;webctrl id='identifierId' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
+                            </ui:TypeInto.Target>
+                          </ui:TypeInto>
+                          <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey 'INPUT  identifierId'" EmptyField="False" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                            <ui:SendHotkey.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="2ac2ee349d0250beccb8cf93d6dfe0d7" Selector="&lt;webctrl id='identifierId' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
+                            </ui:SendHotkey.Target>
+                          </ui:SendHotkey>
+                          <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Into 'INPUT'" EmptyField="True" sap2010:WorkflowViewState.IdRef="TypeInto_2" SendWindowMessages="False" SimulateType="True" Text="[password]">
+                            <ui:TypeInto.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1a413d0c221b87d85fc06551ddf0b41a" Selector="&lt;webctrl name='password' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
+                            </ui:TypeInto.Target>
+                          </ui:TypeInto>
+                          <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey 'INPUT'" EmptyField="False" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                            <ui:SendHotkey.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="31ac8514492984b9e9bc6f9c396b5978" Selector="&lt;webctrl name='password' tag='INPUT' /&gt;" WaitForReady="COMPLETE" />
+                            </ui:SendHotkey.Target>
+                          </ui:SendHotkey>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:OpenBrowser.Body>
+                  </ui:OpenBrowser>
+                </Sequence>
+                <FlowStep.Next>
+                  <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_11">
+                    <Sequence DisplayName="scrapEmailAddressAndID" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="scg:List(snm:MailMessage)" Name="AllMessages" />
+                        <Variable x:TypeArguments="x:String" Name="mailIDs" />
+                        <Variable x:TypeArguments="sd:DataTable" Name="mailIDop" />
+                      </Sequence.Variables>
+                      <ui:GetIMAPMailMessages TimeoutMS="{x:Null}" DeleteMessages="False" DisplayName="Get IMAP mail messages" Email="companyemployee123@gmail.com" EnableSSL="True" sap2010:WorkflowViewState.IdRef="GetIMAPMailMessages_1" MailFolder="Inbox" MarkAsRead="False" Messages="[AllMessages]" OnlyUnreadMessages="True" Password="employee@123" Port="993" SecureConnection="Auto" Server="imap.gmail.com" Top="30" />
+                      <ui:ForEach x:TypeArguments="snm:MailMessage" CurrentIndex="{x:Null}" DisplayName="For each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[AllMessages]">
+                        <ui:ForEach.Body>
+                          <ActivityAction x:TypeArguments="snm:MailMessage">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="snm:MailMessage" Name="item" />
+                            </ActivityAction.Argument>
+                            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_42">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="x:String" Name="subject" />
+                              </Sequence.Variables>
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[mailIDs]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[item.From.Address.ToString]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[subject]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[item.Subject.Replace("Booking ID: ", "")]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <ui:BuildDataTable DataTable="[mailIDop]" DisplayName="Build Data Table" sap2010:WorkflowViewState.IdRef="BuildDataTable_3" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;EmailID&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;1000&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Order_x0020_ID&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;1000&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+                              <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{mailIDS, subject}]" DataTable="[mailIDop]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+                              <ui:AppendCsvFile Encoding="{x:Null}" DataTable="[mailIDop]" Delimitator="Comma" DisplayName="Append To CSV" FilePath="MAILID.CSV" sap2010:WorkflowViewState.IdRef="AppendCsvFile_2" />
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:ForEach.Body>
+                      </ui:ForEach>
+                      <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="MAILID.CSV">
+                        <ui:ExcelApplicationScope.Body>
+                          <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                            </ActivityAction.Argument>
+                            <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                              <ui:ExcelWriteRange AddHeaders="True" DataTable="[mailIDop]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="MAILID" StartingCell="A1" />
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:ExcelApplicationScope.Body>
+                      </ui:ExcelApplicationScope>
+                    </Sequence>
+                    <FlowStep.Next>
+                      <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_12">
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_50">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="sd:DataTable" Name="ansDB" />
+                            <Variable x:TypeArguments="sd:DataTable" Name="csvData" />
+                            <Variable x:TypeArguments="sd:DataTable" Name="Dt1" />
+                            <Variable x:TypeArguments="ui:GenericValue" Name="rowItem" />
+                          </Sequence.Variables>
+                          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_48">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="sd:DataTable" Name="D1" />
+                            </Sequence.Variables>
+                            <ui:BuildDataTable DataTable="[ansDB]" DisplayName="Build Data Table" sap2010:WorkflowViewState.IdRef="BuildDataTable_4" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Order_x0020_ID&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;1000&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Product_x0020_Name&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;1000&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Status&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;1000&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Location&quot; minOccurs=&quot;0&quot;&gt;&#xA;                  &lt;xs:simpleType&gt;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xA;                      &lt;xs:maxLength value=&quot;1000&quot; /&gt;&#xA;                    &lt;/xs:restriction&gt;&#xA;                  &lt;/xs:simpleType&gt;&#xA;                &lt;/xs:element&gt;&#xA;                &lt;xs:element name=&quot;Mail_x0020_ID&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+                            <ui:ReadCsvFile Encoding="{x:Null}" DataTable="[D1]" Delimitator="Comma" DisplayName="Read CSV" FilePath="MAILID.CSV" sap2010:WorkflowViewState.IdRef="ReadCsvFile_1" />
+                            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[D1]" DisplayName="For Each Row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                              <ui:ForEachRow.Body>
+                                <ActivityAction x:TypeArguments="sd:DataRow">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                  </ActivityAction.Argument>
+                                  <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="ui:GenericValue" Name="orderID" />
+                                    </Sequence.Variables>
+                                    <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Order ID" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_1" Row="[row]">
+                                      <ui:GetRowItem.Value>
+                                        <OutArgument x:TypeArguments="ui:GenericValue">[orderID]</OutArgument>
+                                      </ui:GetRowItem.Value>
+                                    </ui:GetRowItem>
+                                    <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" WorkbookPath="C:\Users\Kishore Raj\Desktop\Shipment Record.xlsx">
+                                      <ui:ExcelApplicationScope.Body>
+                                        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                          <ActivityAction.Argument>
+                                            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                          </ActivityAction.Argument>
+                                          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                                            <Sequence.Variables>
+                                              <Variable x:TypeArguments="sd:DataTable" Name="Dt2" />
+                                            </Sequence.Variables>
+                                            <ui:ExcelReadRange AddHeaders="True" DataTable="[Dt2]" DisplayName="Read Range" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="Sheet1">
+                                              <ui:ExcelReadRange.Range>
+                                                <InArgument x:TypeArguments="x:String">
+                                                  <Literal x:TypeArguments="x:String" Value="" />
+                                                </InArgument>
+                                              </ui:ExcelReadRange.Range>
+                                            </ui:ExcelReadRange>
+                                            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[Dt2]" DisplayName="For Each Row" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                                              <ui:ForEachRow.Body>
+                                                <ActivityAction x:TypeArguments="sd:DataRow">
+                                                  <ActivityAction.Argument>
+                                                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row1" />
+                                                  </ActivityAction.Argument>
+                                                  <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                                                    <Sequence.Variables>
+                                                      <Variable x:TypeArguments="ui:GenericValue" Name="rowItem2" />
+                                                      <Variable x:TypeArguments="ui:GenericValue" Name="rowitem3" />
+                                                      <Variable x:TypeArguments="ui:GenericValue" Name="rowItem4" />
+                                                      <Variable x:TypeArguments="ui:GenericValue" Name="proName" />
+                                                      <Variable x:TypeArguments="ui:GenericValue" Name="location" />
+                                                      <Variable x:TypeArguments="ui:GenericValue" Name="status" />
+                                                    </Sequence.Variables>
+                                                    <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Order ID" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_2" Row="[row1]">
+                                                      <ui:GetRowItem.Value>
+                                                        <OutArgument x:TypeArguments="ui:GenericValue">[rowItem2]</OutArgument>
+                                                      </ui:GetRowItem.Value>
+                                                    </ui:GetRowItem>
+                                                    <If Condition="[orderID =rowItem2]" sap2010:WorkflowViewState.IdRef="If_1">
+                                                      <If.Then>
+                                                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_44">
+                                                          <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Product Name" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_3" Row="[row1]">
+                                                            <ui:GetRowItem.Value>
+                                                              <OutArgument x:TypeArguments="ui:GenericValue">[rowitem3]</OutArgument>
+                                                            </ui:GetRowItem.Value>
+                                                          </ui:GetRowItem>
+                                                          <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="EmailID" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_4" Row="[row]">
+                                                            <ui:GetRowItem.Value>
+                                                              <OutArgument x:TypeArguments="ui:GenericValue">[rowItem]</OutArgument>
+                                                            </ui:GetRowItem.Value>
+                                                          </ui:GetRowItem>
+                                                          <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Location" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_5" Row="[row1]">
+                                                            <ui:GetRowItem.Value>
+                                                              <OutArgument x:TypeArguments="ui:GenericValue">[location]</OutArgument>
+                                                            </ui:GetRowItem.Value>
+                                                          </ui:GetRowItem>
+                                                          <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Status" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_6" Row="[row1]">
+                                                            <ui:GetRowItem.Value>
+                                                              <OutArgument x:TypeArguments="ui:GenericValue">[status]</OutArgument>
+                                                            </ui:GetRowItem.Value>
+                                                          </ui:GetRowItem>
+                                                          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{rowItem2,rowitem3,status,location,rowItem}]" DataTable="[ansDB]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
+                                                        </Sequence>
+                                                      </If.Then>
+                                                    </If>
+                                                  </Sequence>
+                                                </ActivityAction>
+                                              </ui:ForEachRow.Body>
+                                            </ui:ForEachRow>
+                                          </Sequence>
+                                        </ActivityAction>
+                                      </ui:ExcelApplicationScope.Body>
+                                    </ui:ExcelApplicationScope>
+                                  </Sequence>
+                                </ActivityAction>
+                              </ui:ForEachRow.Body>
+                            </ui:ForEachRow>
+                          </Sequence>
+                          <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ansDB]" Delimitator="Comma" DisplayName="Write CSV" FilePath="finalData.csv" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" />
+                          <ui:ReadCsvFile Encoding="{x:Null}" DataTable="[csvData]" Delimitator="Comma" DisplayName="Read CSV" FilePath="finalData.csv" sap2010:WorkflowViewState.IdRef="ReadCsvFile_2" />
+                          <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[csvData]" DisplayName="For Each Row" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                            <ui:ForEachRow.Body>
+                              <ActivityAction x:TypeArguments="sd:DataRow">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row5" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="ui:GenericValue" Name="rowitem5" />
+                                    <Variable x:TypeArguments="ui:GenericValue" Name="rowitem6" />
+                                    <Variable x:TypeArguments="ui:GenericValue" Name="loc" />
+                                    <Variable x:TypeArguments="ui:GenericValue" Name="pname" />
+                                  </Sequence.Variables>
+                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Product Name" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_7" Row="[row5]">
+                                    <ui:GetRowItem.Value>
+                                      <OutArgument x:TypeArguments="ui:GenericValue">[pname]</OutArgument>
+                                    </ui:GetRowItem.Value>
+                                  </ui:GetRowItem>
+                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Location" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_8" Row="[row5]">
+                                    <ui:GetRowItem.Value>
+                                      <OutArgument x:TypeArguments="ui:GenericValue">[loc]</OutArgument>
+                                    </ui:GetRowItem.Value>
+                                  </ui:GetRowItem>
+                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Mail ID" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_9" Row="[row5]">
+                                    <ui:GetRowItem.Value>
+                                      <OutArgument x:TypeArguments="ui:GenericValue">[rowitem5]</OutArgument>
+                                    </ui:GetRowItem.Value>
+                                  </ui:GetRowItem>
+                                  <ui:GetRowItem Column="{x:Null}" ColumnIndex="{x:Null}" ColumnName="Status" DisplayName="Get Row Item" sap2010:WorkflowViewState.IdRef="GetRowItem_10" Row="[row5]">
+                                    <ui:GetRowItem.Value>
+                                      <OutArgument x:TypeArguments="ui:GenericValue">[rowitem6]</OutArgument>
+                                    </ui:GetRowItem.Value>
+                                  </ui:GetRowItem>
+                                  <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" TimeoutMS="{x:Null}" Body="[&quot;Hi &quot;+rowitem5+&#xA;&quot; Thank for Mailing Us. Your &quot;+pname+&quot; is &quot;+rowitem6+&quot; and now it is in &quot;+loc+&quot;. Have a Good Day&quot;]" DisplayName="Send SMTP Mail Message" Email="companyemployee123@gmail.com" EnableSSL="True" sap2010:WorkflowViewState.IdRef="SendMail_1" IsBodyHtml="False" Password="employee@123" Port="465" SecureConnection="SslOnConnect" Server="smtp.gmail.com" Subject="Regarding the Shipment Status" To="[rowitem5]">
+                                    <ui:SendMail.Files>
+                                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                    </ui:SendMail.Files>
+                                  </ui:SendMail>
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:ForEachRow.Body>
+                          </ui:ForEachRow>
+                          <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message Box" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;THANK YOU&quot;]" TopMost="True" />
+                        </Sequence>
+                      </FlowStep>
+                    </FlowStep.Next>
+                  </FlowStep>
+                </FlowStep.Next>
+              </FlowStep>
+            </FlowStep.Next>
+          </FlowStep>
+        </FlowStep.Next>
+      </FlowStep>
+    </Flowchart.StartNode>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID4</x:Reference>
+    <sads:DebugSymbol.Symbol>d0xDOlxVc2Vyc1xLaXNob3JlIFJhalxEb2N1bWVudHNcVWlQYXRoXFNoaXBtZW50U3RhdHVzQ29tbXVuaWNhdGlvbjRcTWFpbi54YW1sjwFCA9sCDwIBAUwJUBoDAbYBUw1XHgMBsQFaEXocAwGhAX0VsQEgAgF0tAEZygIkAgECTIkBTJQBAwG6AU48TkQDAbgBTJsBTLMBAwG3AVOPAVObAQMBtQFVQFVKAwGzAVOiAVO6AQMBsgFbE3kkAwGiAYMBF4MBpQMDAZgBhAEXpAEkAgF9pQEXsAEyAgF1uwEbnAImAgExnQIbnQLeAQIBLZ4CG54CywECASmfAhvIAisCAQXJAhvJAtsBAgEDW9MDW+YFAwGwAWEZdiQDAaMBgwGeA4MBogMDAaABgwGGAYMBpAEDAZ8BgwHkAoMB6QIDAZ4BgwGdAoMBrAIDAZwBgwGJA4MBmQMDAZsBgwHQAoMB3gIDAZoBgwH5AYMBgAIDAZkBhAGpAYQBuAEDAZYBigEdoQEoAgF+pQGyAaUBvgECAXyrAR2tASgCAXa/AR2/AZUWAgFxwAEdwAHFAQIBbcEBHZsCLQIBMp0CXJ0CZQIBL50CmwGdAqoBAgEungJJngJUAgErngKJAZ4CmAECASqfAkyfAlcCASelAiHFAiwCAQbJArAByQLJAQIBBGIbZikDAa0BZxtrKwMBqgFsG3ApAwGnAXEbdSsDAaQBjgEflQEoAwGRAZYBH50BKAMBjAGeAR+eAd4OAwGJAZ8BH58BxAEDAYMBoAEfoAHWAQIBf6wBH6wB0QECAXe/ATq/AUMCAXLAAUvAAVECAW/AAYYBwAGSAQIBbsEBTsEBVAIBa8cBI5gCLgIBM6wCI7ACMwIBIbECI7UCMwIBG7YCI7oCMwIBFbsCI78CMwIBD8ACI8QCMQIBB2SuAWTfAQMBrwFiuQJiwwIDAa4Baa4Bad8BAwGsAWeQAmeXAgMBqwFurgFu3QEDAakBbKsCbLcCAwGoAXOuAXPdAQMBpgFxggJxiQIDAaUBkwFKkwFmAwGUAZABS5ABVAMBkgGbAUqbAXQDAY8BmAFLmAFUAwGNAZ4BPJ4BSAMBigGfAWufAXcDAYcBnwFKnwFgAwGEAaABT6ABWwMBgQGgAZUBoAGhAQMBgAGsAcoBrAHOAQIBe6wBT6wBWwIBeawBtAGsAbwBAgF4ywElzwE1AgFl0AEllwJAAgE0rgJWrgJdAgElrALDAawCywECASOsAmasAnQCASKzAlazAlsCAR+xAr8BsQLHAQIBHbECZrECcAIBHLgCVrgCYAIBGbYCvgG2AsYBAgEXtgJmtgJvAgEWvQJWvQJgAgETuwK+AbsCxgECARG7Ama7Am4CARDAAusEwAL3BAIBDsACngHAAskCAgENwALIBMAC5wQCAQzAAvUCwAKTAwIBC8ACggTAAocEAgEKwAKvBMACvwQCAQnAAu4DwAL8AwIBCM0BWM0BYQIBacsBwQHLAcgBAgFnywFoywFyAgFm0AHAAdAB8wECAWTWASuUAjYCATXaAS3gAUECAV/hAS2TAj0CATbaAVzaAWMCAWLdATPdAWICAWHaAboB2gHCAQIBYOEBXuEBZQIBXecBM5ACPgIBN/ABNfQBRQIBV/UBNY8COgIBOPIBaPIBcgIBW/AB0QHwAdkBAgFZ8AF48AGCAQIBWPUBQ/UBWAIBOfcBOY0CRAIBOvgBO/wBSwIBUf0BO4ECSwIBS4ICO4YCSwIBRYcCO4sCSwIBP4wCO4wC9gECATv6AW76AXgCAVX4AdsB+AHjAQIBU/gBfvgBjAECAVL/AW7/AXcCAU/9AdYB/QHdAQIBTf0Bfv0BhwECAUyEAm6EAngCAUmCAtcBggLfAQIBR4ICfoICiAECAUaJAm6JAnYCAUOHAtUBhwLdAQIBQYcCfocChgECAUCMAqABjAKpAQIBPYwCZowClQECATw=</sads:DebugSymbol.Symbol>
+  </Flowchart>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="InputDialog_3" sap:VirtualizedContainerService.HintSize="200,52.8" />
+      <sap2010:ViewStateData Id="InputDialog_4" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="314.4,135.2" />
+      <sap2010:ViewStateData Id="SendHotkey_1" sap:VirtualizedContainerService.HintSize="314.4,156" />
+      <sap2010:ViewStateData Id="TypeInto_2" sap:VirtualizedContainerService.HintSize="314.4,135.2" />
+      <sap2010:ViewStateData Id="SendHotkey_2" sap:VirtualizedContainerService.HintSize="314.4,156" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="336.8,827.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="OpenBrowser_1" sap:VirtualizedContainerService.HintSize="414.4,927.2" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="GetIMAPMailMessages_1" sap:VirtualizedContainerService.HintSize="414.4,22.4" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314.4,60" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="314.4,60" />
+      <sap2010:ViewStateData Id="BuildDataTable_3" sap:VirtualizedContainerService.HintSize="314.4,60" />
+      <sap2010:ViewStateData Id="AddDataRow_3" sap:VirtualizedContainerService.HintSize="314.4,22.4" />
+      <sap2010:ViewStateData Id="AppendCsvFile_2" sap:VirtualizedContainerService.HintSize="314.4,88" />
+      <sap2010:ViewStateData Id="Sequence_42" sap:VirtualizedContainerService.HintSize="336.8,575.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="414.4,709.6" />
+      <sap2010:ViewStateData Id="ExcelWriteRange_1" sap:VirtualizedContainerService.HintSize="314.4,88" />
+      <sap2010:ViewStateData Id="Sequence_43" sap:VirtualizedContainerService.HintSize="336.8,212.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="414.4,322.4" />
+      <sap2010:ViewStateData Id="Sequence_27" sap:VirtualizedContainerService.HintSize="200,52.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BuildDataTable_4" sap:VirtualizedContainerService.HintSize="606.4,60" />
+      <sap2010:ViewStateData Id="ReadCsvFile_1" sap:VirtualizedContainerService.HintSize="606.4,60" />
+      <sap2010:ViewStateData Id="GetRowItem_1" sap:VirtualizedContainerService.HintSize="553.6,64.8" />
+      <sap2010:ViewStateData Id="ExcelReadRange_1" sap:VirtualizedContainerService.HintSize="516.8,60" />
+      <sap2010:ViewStateData Id="GetRowItem_2" sap:VirtualizedContainerService.HintSize="464,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_3" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_4" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_5" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_6" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="AddDataRow_4" sap:VirtualizedContainerService.HintSize="314.4,22.4" />
+      <sap2010:ViewStateData Id="Sequence_44" sap:VirtualizedContainerService.HintSize="336.8,566.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,716" />
+      <sap2010:ViewStateData Id="Sequence_45" sap:VirtualizedContainerService.HintSize="486.4,945.6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="516.8,1094.4" />
+      <sap2010:ViewStateData Id="Sequence_46" sap:VirtualizedContainerService.HintSize="539.2,1319.2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_2" sap:VirtualizedContainerService.HintSize="553.6,1428.8" />
+      <sap2010:ViewStateData Id="Sequence_47" sap:VirtualizedContainerService.HintSize="576,1658.4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="606.4,1807.2" />
+      <sap2010:ViewStateData Id="Sequence_48" sap:VirtualizedContainerService.HintSize="628.8,2132">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteCsvFile_1" sap:VirtualizedContainerService.HintSize="628.8,88" />
+      <sap2010:ViewStateData Id="ReadCsvFile_2" sap:VirtualizedContainerService.HintSize="628.8,60" />
+      <sap2010:ViewStateData Id="GetRowItem_7" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_8" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_9" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="GetRowItem_10" sap:VirtualizedContainerService.HintSize="314.4,64.8" />
+      <sap2010:ViewStateData Id="SendMail_1" sap:VirtualizedContainerService.HintSize="314,145" />
+      <sap2010:ViewStateData Id="Sequence_49" sap:VirtualizedContainerService.HintSize="336.8,688.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_3" sap:VirtualizedContainerService.HintSize="628.8,837.6" />
+      <sap2010:ViewStateData Id="MessageBox_1" sap:VirtualizedContainerService.HintSize="626,59" />
+      <sap2010:ViewStateData Id="Sequence_50" sap:VirtualizedContainerService.HintSize="651.2,3461.6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_12">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">120,533.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_11">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">50,433.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">150,486.4 150,516.4 220,516.4 220,533.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,303.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,356.4 300,386.4 150,386.4 150,433.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,203.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,256.4 300,303.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,113.6</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,166.4 300,203.6</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="614.4,892.8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.7 300,113.6</av:PointCollection>
+            <x:Double x:Key="Height">856.4</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="654.4,1012.8" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
